@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>厦门理工学院</title>
+    <link rel="stylesheet" href="css/style.css"></style>
+    <link rel="stylesheet" href="css/quanJing.css"></style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>厦门理工学院实景三维导览平台</h1>
+    </div>
+    <div class="main-content">
+        <div class="sidebar">
+            <h3>功能列表</h3>
+            <div class="control-group">
+                <h4>地图类型</h4>
+                <div class="maptype">
+                <div class="tool-row">
+                    <input type="radio" name="mapLayer" value="2D" onchange="switchLayer('2d') " checked>标准地图
+                    <input type="radio" name="mapLayer" value="satellite" onchange="switchLayer('satellite') ">卫星地图
+                </div>
+                <div class="tool-row">
+                    <input type="checkbox" id="roadNetCheckbox" onchange="toggleRoadNet()"> 显示路网
+                    <input type="checkbox" id="trafficCheckbox" onchange="toggletraffic()"> 显示路况
+                </div>
+                </div>
+
+                <h4>绘图工具</h4>
+                    <div class="tool-group">
+                        <div class="tool-row">
+                            <button onclick="startDraw('polyline')">绘制线段</button>
+                            <button onclick="startDraw('polygon')">绘制多边形</button>
+                        </div>
+                        <div class="tool-row">
+                            <button onclick="startDraw('marker')">绘制点</button>
+                            <button onclick="startDraw('circle')">绘制圆形</button>
+                            <button onclick="startDraw('rectangle')">绘制矩形</button>
+                        </div>
+                        <div class="tool-aow">
+                            <button onclick="clearOverlays()">清除所有图形</button>
+                        </div>
+                    </div>
+
+                <h4>测量工具</h4>
+                    <div class="tool-group">
+                        <div class="tool-row">
+                            <button onclick="startMeasure('distance')">测量距离</button>
+                            <button onclick="startMeasure('area')">测量面积</button>
+                        </div>
+                        <div class="tool-aow">
+                            <button onclick="clearOverlays()";>清除所有图形</button>
+                        </div>
+                    </div>
+
+                <h4>地点搜索（厦门市）</h4>
+                <div class="tool-group">
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="输入地点名称"
+                           class="search-input">
+                    <div class="tool-row">
+                        <button id="searchBtn" class="search-btn">点击搜索</button>
+                        <div class="tool-aow">
+                            <button id="clearSearchBtn" class="search-btn">清除</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>步行路径规划</h4>
+                <div class="tool-group">
+                    <input type="text"
+                           id="startPoint"
+                           placeholder="输入起点名称"
+                           class="search-input">
+                    <input type="text"
+                           id="endPoint"
+                           placeholder="输入终点名称"
+                           class="search-input">
+                    <div class="tool-row">
+                        <button id="startNavigation">开始规划</button>
+                        <div class="tool-aow">
+                            <button id="clearResult">清除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+        <!-- 地图容器ID必须与初始化代码一致 -->
+            <div id="mapContainer" class="map-container"></div>
+            <!-- 照片栏 -->
+
+        </div>
+    </div>
+</div>
+<!-- 全景查看容器 -->
+<div id="panoramaContainer" class="panorama-container" style="display: none;">
+
+    <div class="panorama-scene">
+        <div class="panorama-cube">
+            <div class="panorama-cube-z">
+                <div class="panorama-face panorama-front">
+                    <div id="nextHotspot" class="pano-hotspot" onmousedown="event.stopPropagation(); window.tiaoZhuan(1);">▲</div>
+                </div>
+                <div class="panorama-face panorama-back">
+                    <div id="prevHotspot" class="pano-hotspot" onmousedown="event.stopPropagation(); window.tiaoZhuan(-1);">▲</div>
+                </div>
+                <div class="panorama-face panorama-left"></div>
+                <div class="panorama-face panorama-right"></div>
+                <div class="panorama-face panorama-top"></div>
+                <div class="panorama-face panorama-bottom"></div>
+            </div>
+        </div>
+    </div>
+
+    <button id="exitPanorama" class="exit-panorama-btn">退出全景</button>
+    <audio id="bgMusic" loop>
+        <source src="music/bgm.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" class="music-toggle-btn">播放音乐 🎵</button>
+    <div class="loading-indicator">加载中...</div>
+
+</div>
+<!-- 本地配置文件不会提交到 GitHub；请复制 config.example.js 为 config.js 并填入自己的高德 Key。 -->
+<script src="config.js"></script>
+<script type="text/javascript">
+    window.APP_CONFIG = window.APP_CONFIG || {};
+    window._AMapSecurityConfig = {
+        securityJsCode: window.APP_CONFIG.AMAP_SECURITY_CODE || ""
+    };
+</script>
+
+<script src="https://webapi.amap.com/loader.js"></script>
+<script src="js/mapType.js"></script>
+<script src="js/mouseTool.js"></script>
+<script src="js/zheDie.js"></script>
+<script src="js/placeSearch.js"></script>
+<script src="js/walkingTrack.js"></script>
+<script src="js/marker.js"></script>
+<script src="js/panorama.js"></script>
+<script src="js/tiaozhuan.js"></script>
+<script src="js/musicPlayer.js"></script>
+
+</body>
+</html>
+
